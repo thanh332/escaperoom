@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Midnight Detective Club</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="grain"></div>
+
+<header class="topbar">
+    <div class="logo">🕯️ MIDNIGHT <span>DETECTIVE CLUB</span></div>
+
+    <nav>
+        <a href="#home">Start</a>
+        <a href="#cases">Kriminalfälle</a>
+        <a href="#office">Detektivbüro</a>
+        <a href="#rules">Spielregeln</a>
+    </nav>
+
+    <div class="points">⭐ <span id="points">0</span> Punkte</div>
+</header>
+
+<main>
+
+<!-- STARTSEITE -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+        <p class="eyebrow">LONDON · 1897 · EIN GEHEIMNIS LIEGT IN DER LUFT</p>
+
+        <h1>THE MIDNIGHT<br><span>DETECTIVE CLUB</span></h1>
+
+        <div class="ornament">━━━━━━ ✦ ━━━━━━</div>
+
+        <p class="hero-text">
+            Drei ungelöste Kriminalfälle. Unzählige Hinweise.
+            Und nur ein Mensch, der die Wahrheit finden kann.
+        </p>
+
+        <p class="hero-question">Bist du bereit, deinen Verstand einzusetzen?</p>
+
+        <a href="#cases" class="main-button">AKTEN ÖFFNEN →</a>
+    </div>
+
+    <div class="hero-stamp">
+        <span>PRIVATE</span>
+        <strong>DETECTIVE</strong>
+        <span>AGENCY</span>
+        <small>EST. 1897</small>
+    </div>
+
+    <div class="hero-bottom">
+        <span>FOG · SECRETS · MYSTERIES</span>
+        <span>NO CASE IS IMPOSSIBLE</span>
+    </div>
+
+</section>
+
+
+<!-- FALLAUSWAHL -->
+<section class="section" id="cases">
+
+    <div class="section-heading">
+        <p class="eyebrow">DEINE ARBEIT BEGINNT</p>
+        <h2>Die ungelösten Fälle</h2>
+        <p>Wähle eine Akte. Untersuche die Hinweise. Finde die Wahrheit.</p>
+    </div>
+
+    <div class="case-grid">
+
+        <article class="case-card" onclick="openCase('clock')">
+            <div class="case-number">CASE Nº 001</div>
+            <div class="case-icon">🕰️</div>
+            <h3>Der letzte Glockenschlag</h3>
+            <p class="case-location">WESTMINSTER · 23:15 UHR</p>
+            <p>
+                Ein wertvolles Schmuckstück verschwindet aus
+                einem verschlossenen Zimmer. Niemand will etwas
+                gesehen haben. Doch eine Uhr verrät mehr als gedacht.
+            </p>
+            <div class="case-footer">
+                <span>Schwierigkeit: ★★☆</span>
+                <span class="open-label">AKTE ÖFFNEN →</span>
+            </div>
+        </article>
+
+        <article class="case-card" onclick="openCase('letter')">
+            <div class="case-number">CASE Nº 002</div>
+            <div class="case-icon">✉️</div>
+            <h3>Der Brief ohne Absender</h3>
+            <p class="case-location">BAKER STREET · 08:30 UHR</p>
+            <p>
+                Ein mysteriöser Brief kündigt ein Verbrechen an.
+                Die Nachricht ist voller seltsamer Zeichen.
+                Kannst du sie entschlüsseln?
+            </p>
+            <div class="case-footer">
+                <span>Schwierigkeit: ★★☆</span>
+                <span class="open-label">AKTE ÖFFNEN →</span>
+            </div>
+        </article>
+
+        <article class="case-card" onclick="openCase('museum')">
+            <div class="case-number">CASE Nº 003</div>
+            <div class="case-icon">🖼️</div>
+            <h3>Das Geheimnis im Museum</h3>
+            <p class="case-location">BRITISH MUSEUM · 19:00 UHR</p>
+            <p>
+                Ein berühmtes Gemälde ist verschwunden.
+                Drei Personen waren zur fraglichen Zeit im Museum.
+                Doch nur eine Geschichte ergibt Sinn.
+            </p>
+            <div class="case-footer">
+                <span>Schwierigkeit: ★★★</span>
+                <span class="open-label">AKTE ÖFFNEN →</span>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+
+<!-- DETEKTIVBÜRO -->
+<section class="office-section" id="office">
+
+    <div class="section-heading">
+        <p class="eyebrow">DEIN HAUPTQUARTIER</p>
+        <h2>Das Detektivbüro</h2>
+        <p>Hier werden Hinweise gesammelt, Geheimnisse gelüftet und Fälle gelöst.</p>
+    </div>
+
+    <div class="office-grid">
+
+        <div class="office-paper">
+            <div class="paper-label">DETECTIVE'S NOTEBOOK</div>
+            <h3>Dein Notizbuch</h3>
+            <p>Ein guter Detektiv vergisst niemals einen Hinweis.</p>
+            <div id="notebook">
+                <p class="empty-note">Noch keine Hinweise gesammelt ...</p>
+            </div>
+        </div>
+
+        <div class="office-board">
+            <div class="paper-label">INVESTIGATION BOARD</div>
+            <h3>Die Ermittlungswand</h3>
+            <div class="board-content">
+                <div class="board-item">🔎 Hinweise</div>
+                <div class="board-line"></div>
+                <div class="board-item">🧩 Rätsel</div>
+                <div class="board-line"></div>
+                <div class="board-item">🕵️ Verdächtige</div>
+                <div class="board-line"></div>
+                <div class="board-item">⚖️ Wahrheit</div>
+            </div>
+            <p class="board-small">EVERY DETAIL MATTERS.</p>
+        </div>
+
+    </div>
+
+    <div class="secret-drawer">
+        <button onclick="openSecret()">🗝️ Geheime Schublade öffnen</button>
+        <p id="secret-message">Hier könnte etwas versteckt sein ...</p>
+    </div>
+
+</section>
+
+
+<!-- SPIELREGELN -->
+<section class="section rules-section" id="rules">
+
+    <div class="section-heading">
+        <p class="eyebrow">BEVOR DU BEGINNST</p>
+        <h2>Die Regeln der Ermittlung</h2>
+    </div>
+
+    <div class="rules-grid">
+        <div class="rule">
+            <span>01</span>
+            <h3>Untersuchen</h3>
+            <p>Klicke auf Gegenstände und lies alle Hinweise genau.</p>
+        </div>
+
+        <div class="rule">
+            <span>02</span>
+            <h3>Nachdenken</h3>
+            <p>Manchmal ist ein Detail wichtiger als die ganze Geschichte.</p>
+        </div>
+
+        <div class="rule">
+            <span>03</span>
+            <h3>Kombinieren</h3>
+            <p>Verbinde die Hinweise miteinander. Die Lösung steckt oft darin.</p>
+        </div>
+
+        <div class="rule">
+            <span>04</span>
+            <h3>Entscheiden</h3>
+            <p>Wähle deine Theorie und stelle den richtigen Verdächtigen.</p>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+    <div>🕯️ THE MIDNIGHT DETECTIVE CLUB</div>
+    <p>Ein fiktives Detektiv-Abenteuer · London, 1897</p>
+    <p class="footer-secret" onclick="footerSecret()">DIE WAHRHEIT IST NÄHER, ALS DU DENKST.</p>
+</footer>
+
+</main>
+
+
+<!-- FALL-FENSTER -->
+<div class="modal" id="caseModal">
+
+    <div class="case-window">
+
+        <button class="close-button" onclick="closeCase()">✕</button>
+
+        <div class="modal-top">
+            <span id="modal-number">CASE Nº 001</span>
+            <span>CONFIDENTIAL</span>
+        </div>
+
+        <h2 id="modal-title">Der Fall</h2>
+        <p id="modal-intro"></p>
+
+        <div class="investigation-area">
+
+            <div class="investigation-column">
+                <h3>📁 FALLAKTE</h3>
+                <div id="story"></div>
+            </div>
+
+            <div class="investigation-column">
+                <h3>🔎 UNTERSUCHUNGSOBJEKTE</h3>
+                <div id="clues" class="clue-list"></div>
+            </div>
+
+        </div>
+
+        <div class="puzzle-area">
+            <div class="puzzle-heading">
+                <span>✦ DEINE MISSION ✦</span>
+            </div>
+
+            <div id="puzzle"></div>
+        </div>
+
+        <div class="result-area" id="result"></div>
+
+    </div>
+</div>
+
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
