@@ -818,3 +818,146 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =================================
+   🏆 MASTER DETECTIVE – GEWINNERANIMATION
+================================= */
+
+.victory-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background:
+        radial-gradient(circle at center, #344333 0%, #101a17 75%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: victoryFadeIn 1s ease forwards;
+    padding: 20px;
+}
+
+.victory-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #f4dfaa;
+    max-width: 650px;
+    animation: victoryZoom 1s ease both;
+}
+
+.victory-trophy {
+    font-size: clamp(75px, 15vw, 125px);
+    animation: trophyBounce 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px #e9bd55);
+}
+
+.victory-eyebrow {
+    font-family: 'Special Elite', cursive;
+    letter-spacing: 5px;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.victory-content h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(35px, 7vw, 65px);
+    line-height: 1.1;
+    margin: 15px 0;
+    color: #f5d78c;
+    text-shadow: 0 0 25px #d6a94d;
+}
+
+.victory-content p {
+    font-family: 'IM Fell English', serif;
+    font-size: 21px;
+    line-height: 1.6;
+}
+
+.victory-rank {
+    display: inline-block;
+    border-top: 1px solid #c9a65b;
+    border-bottom: 1px solid #c9a65b;
+    padding: 12px 25px;
+    margin: 20px 0;
+    letter-spacing: 3px;
+    font-family: 'Cinzel', serif;
+}
+
+.victory-close {
+    display: block;
+    margin: 20px auto 0;
+    padding: 14px 28px;
+    background: #d6b66d;
+    color: #18231b;
+    border: none;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: .3s;
+}
+
+.victory-close:hover {
+    background: #fff0c5;
+    transform: scale(1.07);
+    box-shadow: 0 0 25px #e9bd55;
+}
+
+/* Konfetti */
+
+.victory-confetti {
+    position: absolute;
+    top: -30px;
+    z-index: 1;
+    width: 9px;
+    height: 16px;
+    background: #e7c46e;
+    animation: confettiFall linear forwards;
+}
+
+.victory-confetti:nth-child(3n) {
+    background: #f3e7c6;
+    width: 6px;
+    height: 12px;
+}
+
+.victory-confetti:nth-child(3n + 1) {
+    background: #a8b58a;
+}
+
+@keyframes victoryFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes victoryZoom {
+    from {
+        opacity: 0;
+        transform: scale(.65);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes trophyBounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(110vh) rotate(900deg);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .victory-overlay *,
+    .victory-overlay {
+        animation-duration: 0.01ms !important;
+    }
+}
