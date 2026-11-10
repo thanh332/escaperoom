@@ -1,4 +1,5 @@
 
+
 const cases = {
 
     clock: {
@@ -46,11 +47,10 @@ const cases = {
             <div id="answer-options"></div>
         `,
 
-        answers: ["rose"],
-        solution: "Miss Rose war im Arbeitszimmer. Ihre Schuhe passen zu den Fussabdrücken. Die angehaltene Uhr sollte den Zeitpunkt des Vorfalls verschleiern. Die übrigen Hinweise zeigen, dass ihre Geschichte nicht stimmt.",
-        culprit: "Miss Rose",
+        answers: ["miss rose"],
+        options: ["Mr. Black", "Miss Rose", "Mr. Grey"],
 
-        options: ["Mr. Black", "Miss Rose", "Mr. Grey"]
+        solution: "Miss Rose war im Arbeitszimmer. Ihre Schuhe passen zu den Fussabdrücken. Die angehaltene Uhr sollte den Zeitpunkt des Vorfalls verschleiern. Ihre Aussage passt nicht zu den gefundenen Spuren."
     },
 
 
@@ -96,15 +96,13 @@ const cases = {
             <h2 style="letter-spacing:12px;color:#e3c98f;">2 – 1 – 14 – 11</h2>
             <p>Welches Wort entsteht?</p>
             <input class="puzzle-input" id="text-answer" placeholder="Deine Lösung ...">
-            <button class="puzzle-button" onclick="checkTextAnswer('bank')">NACHRICHT ENTSCHLÜSSELN</button>
+            <button class="puzzle-button" onclick="checkTextAnswer()">NACHRICHT ENTSCHLÜSSELN</button>
             <div class="puzzle-feedback" id="feedback"></div>
         `,
 
         answers: ["bank"],
-        solution: "2 = B, 1 = A, 14 = N und 11 = K. Das Wort lautet BANK. Der Hinweis auf die Züge und die Bahnhofsuhr führt zum Bahnhof. Der Brief sollte die Ermittler dorthin locken.",
-        culprit: "Der Absender des Briefes bleibt zunächst geheim.",
 
-        options: ["Park", "Bank", "Haus"]
+        solution: "2 = B, 1 = A, 14 = N und 11 = K. Das Wort lautet BANK. Der Hinweis auf die Züge führt zum Bahnhof. Der Brief sollte die Ermittler dorthin locken."
     },
 
 
@@ -140,7 +138,7 @@ const cases = {
             },
             {
                 name: "🖼️ Der Bilderrahmen",
-                detail: "Der Rahmen des verschwundenen Bildes wurde vorsichtig abgenommen. Es gibt keine Hinweise auf einen Kampf oder eine Beschädigung."
+                detail: "Der Rahmen des verschwundenen Bildes wurde vorsichtig abgenommen. Es gibt keine Hinweise auf eine Beschädigung."
             }
         ],
 
@@ -151,14 +149,16 @@ const cases = {
             <div id="answer-options"></div>
         `,
 
-        answers: ["green"],
-        solution: "Miss Green ist die Person mit der unglaubwürdigsten Aussage. Sie behauptet, gemalt zu haben, obwohl das Atelier während des Stromausfalls völlig dunkel war und die Taschenlampe dort benutzt wurde. Die Hinweise machen sie verdächtig – auch wenn weitere Ermittlungen nötig wären, um den Diebstahl endgültig zu beweisen.",
-        culprit: "Miss Green",
+        answers: ["miss green"],
+        options: ["Miss Green", "Mr. Brown", "Lady White"],
 
-        options: ["Miss Green", "Mr. Brown", "Lady White"]
+        solution: "Miss Green ist die Person mit der unglaubwürdigsten Aussage. Sie behauptet, gemalt zu haben, obwohl das Atelier während des Stromausfalls dunkel war und die Taschenlampe dort benutzt wurde. Weitere Ermittlungen wären nötig, um den Diebstahl endgültig zu beweisen."
     }
 
 };
+
+
+// SPIELSTAND
 
 let currentCase = null;
 let foundClues = new Set();
@@ -169,7 +169,11 @@ const modal = document.getElementById("caseModal");
 const notebook = document.getElementById("notebook");
 
 
+// FALL ÖFFNEN
+
 function openCase(id) {
+
+    if (!cases[id]) return;
 
     currentCase = id;
     foundClues = new Set();
@@ -181,7 +185,6 @@ function openCase(id) {
     document.getElementById("modal-intro").textContent = data.intro;
     document.getElementById("story").innerHTML = data.story;
     document.getElementById("puzzle").innerHTML = data.puzzle;
-
     document.getElementById("result").innerHTML = "";
 
     const clueArea = document.getElementById("clues");
@@ -210,8 +213,9 @@ function openCase(id) {
 
                 addNotebookEntry(data.number + ": " + clue.name);
 
-                showToast("🔎 Hinweis entdeckt! +5 Punkte");
                 addPoints(5);
+                showToast("🔎 Hinweis entdeckt! +5 Punkte");
+
             }
 
         });
@@ -232,11 +236,17 @@ function openCase(id) {
 }
 
 
+// FALL SCHLIESSEN
+
 function closeCase() {
+
     modal.classList.remove("show");
     document.body.style.overflow = "";
+
 }
 
+
+// ANTWORTOPTIONEN ERSTELLEN
 
 function createOptions(options) {
 
@@ -249,10 +259,13 @@ function createOptions(options) {
     options.forEach((option, index) => {
 
         const button = document.createElement("button");
+
         button.className = "clue-button";
         button.textContent = option;
 
-        button.onclick = () => checkOption(index);
+        button.addEventListener("click", () => {
+            checkOption(index);
+        });
 
         area.appendChild(button);
 
@@ -261,29 +274,41 @@ function createOptions(options) {
 }
 
 
-function checkOption(index) {
+// ANTWORT AUSWERTEN
 
-    const data = cases[currentCase];
+function checkOption(index) {
 
     if (solvedCases.has(currentCase)) {
         showToast("Diesen Fall hast du bereits gelöst!");
         return;
     }
 
-    const selected = data.options[index].toLowerCase();
+    const data = cases[currentCase];
 
-    const correct = data.answers.includes(selected);
+    if (!data) return;
+
+    const selected = data.options[index].trim().toLowerCase();
+
+    const correct = data.answers.some(answer =>
+        answer.trim().toLowerCase() === selected
+    );
 
     if (correct) {
+
         solveCase();
+
     } else {
-        showToast("Das ist noch nicht ganz richtig. Untersuche die Hinweise!");
+
+        showToast("Leider falsch! Untersuche die Hinweise nochmals. 🔎");
+
     }
 
 }
 
 
-function checkTextAnswer(correctAnswer) {
+// TEXTANTWORT AUSWERTEN
+
+function checkTextAnswer() {
 
     if (solvedCases.has(currentCase)) {
         showToast("Diesen Fall hast du bereits gelöst!");
@@ -293,23 +318,32 @@ function checkTextAnswer(correctAnswer) {
     const input = document.getElementById("text-answer");
     const feedback = document.getElementById("feedback");
 
+    if (!input || !feedback) return;
+
     const answer = input.value.trim().toLowerCase();
 
-    if (answer === correctAnswer) {
+    if (cases[currentCase].answers.includes(answer)) {
+
         feedback.textContent = "✓ Richtig! Du hast die Nachricht entschlüsselt.";
+
         solveCase();
+
     } else {
+
         feedback.textContent = "Das stimmt noch nicht. Denke an das Alphabet!";
+
     }
 
 }
 
 
+// FALL ERFOLGREICH LÖSEN
+
 function solveCase() {
 
     const data = cases[currentCase];
 
-    if (solvedCases.has(currentCase)) return;
+    if (!data || solvedCases.has(currentCase)) return;
 
     solvedCases.add(currentCase);
 
@@ -331,6 +365,8 @@ function solveCase() {
 }
 
 
+// PUNKTE
+
 function addPoints(amount) {
 
     points += amount;
@@ -340,6 +376,8 @@ function addPoints(amount) {
 }
 
 
+// NOTIZBUCH
+
 function addNotebookEntry(text) {
 
     if (notebook.querySelector(".empty-note")) {
@@ -347,6 +385,7 @@ function addNotebookEntry(text) {
     }
 
     const entry = document.createElement("div");
+
     entry.className = "notebook-entry";
     entry.textContent = "✦ " + text;
 
@@ -354,6 +393,8 @@ function addNotebookEntry(text) {
 
 }
 
+
+// MELDUNGEN
 
 function showToast(message) {
 
@@ -365,11 +406,15 @@ function showToast(message) {
     clearTimeout(window.toastTimer);
 
     window.toastTimer = setTimeout(() => {
+
         toast.classList.remove("show");
+
     }, 2400);
 
 }
 
+
+// GEHEIME SCHUBLADE
 
 function openSecret() {
 
@@ -382,12 +427,16 @@ function openSecret() {
 }
 
 
+// GEHEIME FUSSZEILE
+
 function footerSecret() {
 
     showToast("Ein guter Detektiv schaut auch ganz unten nach ... 🕵️");
 
 }
 
+
+// MODAL DURCH AUSSENKLICK SCHLIESSEN
 
 modal.addEventListener("click", (event) => {
 
@@ -397,6 +446,8 @@ modal.addEventListener("click", (event) => {
 
 });
 
+
+// MODAL MIT ESCAPE SCHLIESSEN
 
 document.addEventListener("keydown", (event) => {
 
