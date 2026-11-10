@@ -457,21 +457,3 @@ document.addEventListener("keydown", (event) => {
 
 });
 
-let currentCase = null;
-let foundClues = new Set();
-let solvedCases = new Set();
-let points = 0;
-
-let victoryShown = false;
-
-showToast("🏆 Fall gelöst! +30 Punkte");
-
-if (
-    solvedCases.size === Object.keys(cases).length &&
-    !victoryShown
-) {
-    victoryShown = true;
-    setTimeout(showVictoryScreen, 1000);
-}
-
-
